@@ -1,5 +1,24 @@
 #include"binary_trees.h"
 /**
+ * binary_tree_height - function
+ * @tree: parent
+ * Return: none
+ */
+size_t binary_tree_height(const binary_tree_t *tree)
+{
+	int n;
+	int b;
+
+	if (tree == NULL)
+		return (0);
+	if (tree->right == NULL && tree->left == NULL)
+		return (0);
+	n = binary_tree_height(tree->left);
+	b = binary_tree_height(tree->right);
+	return ((n >= b ? n + 1 : b + 1));
+}
+
+/**
  * binary_tree_is_perfect - function
  * @tree: parent
  * Return: none
@@ -7,16 +26,13 @@
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
 	size_t n;
-	size_t b, f, q;
+	size_t b;
 
 	if (tree == NULL)
 		return (0);
 	if (tree->right == NULL && tree->left == NULL)
 		return (1);
 	n = binary_tree_is_perfect(tree->left);
-		f = n;
 	b = binary_tree_is_perfect(tree->right);
-		q = b;
-	printf("%d, %ld, %ld, %ld, %ld\n",tree->n, n, b, f, q);
-	return (f+=n , q+=b, n == 1 && b == n && f == q ? 1 : 0);
+	return ( n == 1 && binary_tree_height(tree->left) == binary_tree_height(tree->right) ? 1 : 0);
 }
